@@ -29,7 +29,7 @@ object CourseLearnProducer {
           "org.apache.kafka.common.serialization.StringSerializer")
         val producer = new KafkaProducer[String, String](props)
         partitoin.foreach(item => {
-          val msg = new ProducerRecord[String, String](properties.getProperty("course.learn"), item)
+          val msg = new ProducerRecord[String, String](properties.getProperty("course.learn.topic"), item)
           producer.send(msg)
         })
         producer.flush()

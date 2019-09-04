@@ -203,7 +203,7 @@ object QzPointStreaming {
     /**
       * 需求2 : 同一个用户做在同一门课程同一知识点下做题需要去重,并且需要记录去重后的做题id与个数;
       */
-    //总数
+    // 总数
     val countSize = resultQuestionid.length
     // ids
     val resultQuestionid_str = resultQuestionid.mkString(",")
