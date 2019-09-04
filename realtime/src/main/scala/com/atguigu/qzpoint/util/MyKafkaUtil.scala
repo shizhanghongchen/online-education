@@ -3,7 +3,6 @@ package com.atguigu.qzpoint.util
 import java.lang
 import java.util.Properties
 
-import com.atguigu.qzpoint.constant.SqlConstantValue
 import org.apache.kafka.common.serialization.StringDeserializer
 
 /**

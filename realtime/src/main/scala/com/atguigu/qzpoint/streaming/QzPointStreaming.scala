@@ -16,11 +16,11 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 import scala.collection.mutable
 
 /**
-  * @description: 知识点掌握度实时统计
-  *               需求1：要求Spark Streaming 保证数据不丢失，每秒100条处理速度，需要手动维护偏移量
-  *               需求2：同一个用户做在同一门课程同一知识点下做题需要去重，并且需要记录去重后的做题id与个数。
-  *               需求3：计算知识点正确率 正确率计算公式：做题正确总个数/做题总数 保留两位小数
-  *               需求4：计算知识点掌握度 去重后的做题个数/当前知识点总题数（已知30题）*当前知识点的正确率
+  * @description: 知识点掌握度实时统计 :
+  *               需求1 : 要求Spark Streaming 保证数据不丢失,每秒100条处理速度,需要手动维护偏移量;
+  *               需求2 : 同一个用户做在同一门课程同一知识点下做题需要去重,并且需要记录去重后的做题id与个数;
+  *               需求3 : 计算知识点正确率,正确率计算公式 : 做题正确总个数 / 做题总数 (保留两位小数);
+  *               需求4 : 计算知识点掌握度去重后的做题个数 / 当前知识点总题数（已知30题）* 当前知识点的正确率;
   * @Author: my.yang
   * @Date: 2019/9/4 8:47 AM
   */
@@ -37,10 +37,14 @@ object QzPointStreaming {
       * 设置Spark运行环境以及配置
       */
     val conf = new SparkConf().setAppName(this.getClass.getSimpleName)
+
+      /**
+        * 模式切换 : 集群模式需注释此参数
+        */
       .setMaster("local[*]")
 
       /**
-        * 需求1：要求Spark Streaming 保证数据不丢失，每秒100条处理速度，需要手动维护偏移量
+        * 需求1 : 要求Spark Streaming 保证数据不丢失,每秒100条处理速度,需要手动维护偏移量;
         */
       .set("spark.streaming.kafka.maxRatePerPartition", "10")
       .set("spark.streaming.stopGracefullyOnShutdown", "true")
@@ -197,7 +201,7 @@ object QzPointStreaming {
     // 获取到历史数据后再与当前数据进行拼接 去重
     val resultQuestionid = questionids.union(questionids_history).distinct
     /**
-      * 需求2：同一个用户做在同一门课程同一知识点下做题需要去重，并且需要记录去重后的做题id与个数。
+      * 需求2 : 同一个用户做在同一门课程同一知识点下做题需要去重,并且需要记录去重后的做题id与个数;
       */
     //总数
     val countSize = resultQuestionid.length
@@ -237,14 +241,14 @@ object QzPointStreaming {
     // 计算正确题总数 历史 + 当前
     qz_istrue += istrue_history
     /**
-      * 需求3：计算知识点正确率 正确率计算公式：做题正确总个数/做题总数 保留两位小数
+      * 需求3 : 计算知识点正确率 正确率计算公式 : 做题正确总个数 / 做题总数 (保留两位小数);
       */
     val correct_rate = qz_istrue.toDouble / qz_sum.toDouble
     // 计算完成率
     // 假设每个知识点下一共有30道题  先计算题的做题情况 再计知识点掌握度
     // 算出做题情况乘以 正确率 得出完成率 假如30道题都做了那么正确率等于 知识点掌握度
     /**
-      * 需求4：计算知识点掌握度 去重后的做题个数/当前知识点总题数（已知30题）* 当前知识点的正确率
+      * 需求4 : 计算知识点掌握度 去重后的做题个数 / 当前知识点总题数（已知30题）* 当前知识点的正确率;
       */
     val qz_detail_rate = countSize.toDouble / 30
     val mastery_rate = qz_detail_rate * correct_rate
