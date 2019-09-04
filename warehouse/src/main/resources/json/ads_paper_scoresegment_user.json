@@ -1,0 +1,74 @@
+{
+  "job": {
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    },
+    "content": [
+      {
+        "reader": {
+          "name": "hdfsreader",
+          "parameter": {
+            "path": "/user/hive/warehouse/ads.db/ads_paper_scoresegment_user/dt=${dt}/dn=${dn}",
+            "defaultFS": "hdfs://hadoop102:9000",
+            "column": [
+              {
+                "index": 0,
+                "type": "string"
+              },
+              {
+                "index": 1,
+                "type": "string"
+              },
+              {
+                "index": 2,
+                "type": "string"
+              },
+              {
+                "index": 3,
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "value": "${dt}"
+              },
+              {
+                "type": "string",
+                "value": "${dn}"
+              }
+            ],
+            "fileType": "text",
+            "encoding": "UTF-8",
+            "fieldDelimiter": "\t"
+          }
+        },
+        "writer": {
+          "name": "mysqlwriter",
+          "parameter": {
+            "writeMode": "insert",
+            "username": "root",
+            "password": "000000",
+            "column": [
+              "*"
+            ],
+            "session": [
+              "set session sql_mode='ANSI'"
+            ],
+            "preSql": [
+              "delete from ads_paper_scoresegment_user where dt=${dt}"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": "jdbc:mysql://192.168.181.102:3306/online-education?useUnicode=true&characterEncoding=UTF-8",
+                "table": [
+                  "ads_paper_scoresegment_user"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

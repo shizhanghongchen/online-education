@@ -1,0 +1,106 @@
+{
+  "job": {
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    },
+    "content": [
+      {
+        "reader": {
+          "name": "hdfsreader",
+          "parameter": {
+            "path": "/user/hive/warehouse/ads.db/ads_low3_userdetail/dt=${dt}/dn=${dn}",
+            "defaultFS": "hdfs://hadoop102:9000",
+            "column": [
+              {
+                "index": 0,
+                "type": "string"
+              },
+              {
+                "index": 1,
+                "type": "string"
+              },
+              {
+                "index": 2,
+                "type": "string"
+              },
+              {
+                "index": 3,
+                "type": "string"
+              },
+              {
+                "index": 4,
+                "type": "string"
+              },
+              {
+                "index": 5,
+                "type": "string"
+              },
+              {
+                "index": 6,
+                "type": "string"
+              },
+              {
+                "index": 7,
+                "type": "string"
+              },
+              {
+                "index": 8,
+                "type": "string"
+              },
+              {
+                "index": 9,
+                "type": "string"
+              },
+              {
+                "index": 10,
+                "type": "string"
+              },
+              {
+                "index": 11,
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "value": "${dt}"
+              },
+              {
+                "type": "string",
+                "value": "${dn}"
+              }
+            ],
+            "fileType": "text",
+            "encoding": "UTF-8",
+            "fieldDelimiter": "\t"
+          }
+        },
+        "writer": {
+          "name": "mysqlwriter",
+          "parameter": {
+            "writeMode": "insert",
+            "username": "root",
+            "password": "000000",
+            "column": [
+              "*"
+            ],
+            "session": [
+              "set session sql_mode='ANSI'"
+            ],
+            "preSql": [
+              "delete from ads_low3_userdetail where dt=${dt}"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": "jdbc:mysql://192.168.181.102:3306/online-education?useUnicode=true&characterEncoding=UTF-8",
+                "table": [
+                  "ads_low3_userdetail"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
