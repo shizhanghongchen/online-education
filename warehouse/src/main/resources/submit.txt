@@ -1,0 +1,1 @@
+ spark-submit --master yarn --deploy-mode client --driver-memory 2g --num-executors 10 --executor-cores 4 --executor-memory 2g --class com.atguigu.controller.BdlMemberController com_atguigu_warehouse-1.0-SNAPSHOT-jar-with-dependencies.jar
