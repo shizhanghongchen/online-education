@@ -1,0 +1,25 @@
+CREATE TABLE `page_jump_rate` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `last_page_id` INT(11) DEFAULT NULL,
+  `page_id` INT(11) DEFAULT NULL,
+  `next_page_id` INT(11) DEFAULT NULL,
+  `num` BIGINT(20) DEFAULT NULL,
+  `jump_rate` VARCHAR(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `page_jum_rate_unique` (`page_id`)
+) ENGINE=INNODB AUTO_INCREMENT=394 DEFAULT CHARSET=utf8
+
+CREATE TABLE `tmp_city_num_detail` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `province` VARCHAR(10) DEFAULT NULL,
+  `num` BIGINT(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tmp_cityp_num_index_province` (`province`)
+) ENGINE=INNODB AUTO_INCREMENT=4191 DEFAULT CHARSET=utf8
+
+CREATE TABLE `top_city_num` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `province` VARCHAR(10) DEFAULT NULL,
+  `num` BIGINT(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
