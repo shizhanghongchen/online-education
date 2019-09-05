@@ -1,5 +1,4 @@
 # online-education
-online-education
 
 # `离线数仓`
 ## `用户注册模块`
